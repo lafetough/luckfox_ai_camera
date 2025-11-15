@@ -23,6 +23,7 @@ set(SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/src/luckfox_mpi.cc"
     "${SOURCE_DIR}/memory_pool.cc"
     "${SOURCE_DIR}/frame_processor.cc"
+    "${SOURCE_DIR}/rtsp_server.cc"
 )
 set(HEADERS
     "${INCLUDE_DIR}/luckfox_mpi.h"
@@ -32,6 +33,7 @@ set(HEADERS
     "${INCLUDE_DIR}/sample_comm_isp.h"
     "${INCLUDE_DIR}/memory_pool.h"
     "${INCLUDE_DIR}/frame_processor.h"
+    "${INCLUDE_DIR}/rtsp_server.h"
 )
 
 
