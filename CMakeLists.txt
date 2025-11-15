@@ -21,6 +21,8 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 set(SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/src/main.cc"
     "${CMAKE_CURRENT_LIST_DIR}/src/luckfox_mpi.cc"
+    "${SOURCE_DIR}/memory_pool.cc"
+    "${SOURCE_DIR}/frame_processor.cc"
 )
 set(HEADERS
     "${INCLUDE_DIR}/luckfox_mpi.h"
@@ -28,6 +30,8 @@ set(HEADERS
     "${INCLUDE_DIR}/loadbmp.h"
     "${INCLUDE_DIR}/sample_comm.h"
     "${INCLUDE_DIR}/sample_comm_isp.h"
+    "${INCLUDE_DIR}/memory_pool.h"
+    "${INCLUDE_DIR}/frame_processor.h"
 )
 
 
