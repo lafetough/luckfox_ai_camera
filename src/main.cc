@@ -3,7 +3,6 @@
 #include <fcntl.h>
 #include <getopt.h>
 #include <pthread.h>
-#include <signal.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,14 +10,7 @@
 #include <sys/poll.h>
 #include <time.h>
 #include <unistd.h>
-#include <vector>
 
-#include "rtsp_demo.h"
-#include "luckfox_mpi.h"
-
-#include "opencv2/core/core.hpp"
-#include "opencv2/highgui/highgui.hpp"
-#include "opencv2/imgproc/imgproc.hpp"
 
 #include "memory_pool.h"
 #include "frame_processor.h"
@@ -71,7 +63,7 @@ public:
         err = _rtsp_server.syncVideoTimestamp(rtsp_get_reltime(), rtsp_get_ntptime());
 
         if(err != 0) {
-            return err;
+            goto app_free;
         }
 
         // venc init
@@ -112,6 +104,8 @@ public:
             }
 
         }
+
+app_free:
 
         free(stFrame.pstPack);
 
