@@ -1,6 +1,6 @@
 #include "frame_processor.h"
 #include <cstdio>
-#include "luckfox_mpi.h"
+#include "utilities.h"
 
 FrameProcessor::FrameProcessor(int width, int height)
     : width_(width), height_(height) {
@@ -27,7 +27,7 @@ int FrameProcessor::initVideoCapture() {
 
 void FrameProcessor::updateTimeForFrame() {
     h264_frame.stVFrame.u32TimeRef = H264_TimeRef++;
-    h264_frame.stVFrame.u64PTS = TEST_COMM_GetNowUs();
+    h264_frame.stVFrame.u64PTS = TimerUtils::getCurrentTimeUs();
 }
 
 void FrameProcessor::initFrame(const MemoryPool& mem_pool) {
@@ -69,7 +69,7 @@ bool FrameProcessor::captureFrame() {
 }
 
 float FrameProcessor::getFps() const {
-    RK_U64 nowUs = TEST_COMM_GetNowUs();
+    RK_U64 nowUs = TimerUtils::getCurrentTimeUs();
     return  (float) 1000000 / (float)(nowUs - h264_frame.stVFrame.u64PTS);
 }
 

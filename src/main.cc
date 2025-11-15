@@ -16,6 +16,7 @@
 #include "frame_processor.h"
 #include "rtsp_server.h"
 #include "video_encoder.h"
+#include "utilities.h"
 
 
 class App {
@@ -31,8 +32,6 @@ public:
     int main() {
         RK_S32 s32Ret = 0;
 
-        int sX,sY,eX,eY;
-
         float fps = 0;
         RK_U64 nowUs;
 
@@ -41,7 +40,7 @@ public:
         _frame_processor.initVideoCapture();
 
         // rkmpi init
-        if (RK_MPI_SYS_Init() != RK_SUCCESS) {
+        if (SystemUtils::initMpiSystem() != RK_SUCCESS) {
             RK_LOGE("rk mpi sys init fail!");
             return -1;
         }
@@ -109,7 +108,7 @@ app_free:
 
         free(stFrame.pstPack);
 
-        RK_MPI_SYS_Exit();
+        SystemUtils::exitMpiSystem();
 
         return 0;
     }

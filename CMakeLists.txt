@@ -20,14 +20,15 @@ find_package(OpenCV REQUIRED)
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 set(SOURCES
     "${CMAKE_CURRENT_LIST_DIR}/src/main.cc"
-    "${CMAKE_CURRENT_LIST_DIR}/src/luckfox_mpi.cc"
+    # "${CMAKE_CURRENT_LIST_DIR}/src/luckfox_mpi.cc"
     "${SOURCE_DIR}/memory_pool.cc"
     "${SOURCE_DIR}/frame_processor.cc"
     "${SOURCE_DIR}/rtsp_server.cc"
     "${SOURCE_DIR}/video_encoder.cc"
+    "${SOURCE_DIR}/utilities.cc"
 )
 set(HEADERS
-    "${INCLUDE_DIR}/luckfox_mpi.h"
+    # "${INCLUDE_DIR}/luckfox_mpi.h"
     "${INCLUDE_DIR}/rtsp_demo.h"
     "${INCLUDE_DIR}/loadbmp.h"
     "${INCLUDE_DIR}/sample_comm.h"
@@ -36,6 +37,7 @@ set(HEADERS
     "${INCLUDE_DIR}/frame_processor.h"
     "${INCLUDE_DIR}/rtsp_server.h"
     "${INCLUDE_DIR}/video_encoder.h"
+    "${INCLUDE_DIR}/utilities.h"
 )
 
 
