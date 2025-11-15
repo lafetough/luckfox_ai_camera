@@ -24,6 +24,7 @@ set(SOURCES
     "${SOURCE_DIR}/memory_pool.cc"
     "${SOURCE_DIR}/frame_processor.cc"
     "${SOURCE_DIR}/rtsp_server.cc"
+    "${SOURCE_DIR}/video_encoder.cc"
 )
 set(HEADERS
     "${INCLUDE_DIR}/luckfox_mpi.h"
@@ -34,6 +35,7 @@ set(HEADERS
     "${INCLUDE_DIR}/memory_pool.h"
     "${INCLUDE_DIR}/frame_processor.h"
     "${INCLUDE_DIR}/rtsp_server.h"
+    "${INCLUDE_DIR}/video_encoder.h"
 )
 
 

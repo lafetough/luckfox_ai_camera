@@ -23,6 +23,7 @@
 #include "memory_pool.h"
 #include "frame_processor.h"
 #include "rtsp_server.h"
+#include "video_encoder.h"
 
 
 class App {
@@ -31,7 +32,8 @@ public:
     App(uint16_t width, uint16_t height)
         :_width(width), _height(height),
         _mem_pool(width * height * 3, 1),
-        _frame_processor(width, height)
+        _frame_processor(width, height),
+        _venc(width, height)
     {}
 
     int main() {
@@ -68,9 +70,12 @@ public:
         err = _rtsp_server.setVideoCodec(RTSP_CODEC_ID_VIDEO_H264, NULL, 0);
         err = _rtsp_server.syncVideoTimestamp(rtsp_get_reltime(), rtsp_get_ntptime());
 
+        if(err != 0) {
+            return err;
+        }
+
         // venc init
-        RK_CODEC_ID_E enCodecType = RK_VIDEO_ID_AVC;
-        venc_init(0, _width, _height, enCodecType);
+        _venc.init(0, RK_VIDEO_ID_AVC);
 
         printf("init success\n");
 
@@ -85,10 +90,11 @@ public:
 
             // send stream
             // encode H264
-            RK_MPI_VENC_SendFrame(0, _frame_processor.getFrameForVenc(), -1);
+            _venc.sendFrame(_frame_processor.getFrameForVenc());
 
             // rtsp
-            s32Ret = RK_MPI_VENC_GetStream(0, &stFrame, -1);
+
+            s32Ret = _venc.getStream(&stFrame);
             if(s32Ret == RK_SUCCESS)
             {
                     // printf("len = %d PTS = %d \n",stFrame.pstPack->u32Len, stFrame.pstPack->u64PTS);
@@ -100,15 +106,12 @@ public:
                 fps = _frame_processor.getFps();
             }
 
-            s32Ret = RK_MPI_VENC_ReleaseStream(0, &stFrame);
+            s32Ret = _venc.releaseStream(&stFrame);
             if (s32Ret != RK_SUCCESS) {
                 RK_LOGE("RK_MPI_VENC_ReleaseStream fail %x", s32Ret);
             }
 
         }
-
-        RK_MPI_VENC_StopRecvFrame(0);
-        RK_MPI_VENC_DestroyChn(0);
 
         free(stFrame.pstPack);
 
@@ -120,6 +123,7 @@ private:
     MemoryPool _mem_pool;
     FrameProcessor _frame_processor;
     RtspServer _rtsp_server;
+    VideoEncoder _venc;
 
     uint16_t _width;
     uint16_t _height;
