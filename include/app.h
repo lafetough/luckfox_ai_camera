@@ -7,20 +7,15 @@
 #include <getopt.h>
 #include <pthread.h>
 #include <stdbool.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <sys/poll.h>
-#include <time.h>
 #include <unistd.h>
 
 #include "memory_pool.h"
 #include "frame_processor.h"
 #include "rtsp_server.h"
 #include "video_encoder.h"
-#include "utilities.h"
-
-
+#include "rknn_interface.h"
 
 class App
 {
@@ -43,11 +38,16 @@ private:
     std::unique_ptr<FrameProcessor> _frame_processor;
     std::unique_ptr<RtspServer> _rtsp_server;
     std::unique_ptr<VideoEncoder> _venc;
+    std::unique_ptr<RKNNInference> _inferance;
 
     uint16_t _width;
     uint16_t _height;
     uint16_t _rtsp_port;
     bool _initialized;
+
+    int _model_width;      // ← Добавить
+    int _model_height;     // ← Добавить
+    int _model_channel;    // ← Добавит
 };
 
 #endif // APP_H

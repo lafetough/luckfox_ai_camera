@@ -84,6 +84,23 @@ bool App::_initComponents() {
         return false;
     }
 
+    // 4. Inferance init
+    _inferance = std::make_unique<RKNNInference>();
+
+    if (_inferance->Init("yolov5nu.rknn") != 0) {
+        printf("Failed to initialize model\n");
+        return -1;
+    }
+
+    printf("Inputs: %d, Outputs: %d\n", _inferance->GetInputCount(), _inferance->GetOutputCount());
+
+    const TensorInfo& input_info = _inferance->GetInputInfo();
+    _model_width = input_info.dims[1];   // или dims[2] в зависимости от формата
+    _model_height = input_info.dims[2];  // или dims[1] в зависимости от формата
+    _model_channel = input_info.dims[3]; // или dims[3] в зависимости от формата
+
+
+    printf("Model input size: %dx%d (channels: %d)\n", _model_width, _model_height, _model_channel);
 
     printf("Succsessfull initialization\n");
     return true;
@@ -127,6 +144,8 @@ int App::run() {
         {
             // printf("len = %d PTS = %d \n",stFrame.pstPack->u32Len, stFrame.pstPack->u64PTS);
             void *pData = _mem_pool->getVirtualAddress(stFrame.pstPack->pMbBlk);
+
+
 
             _rtsp_server->sendVideoFrame(
                 reinterpret_cast<uint8_t*>(pData),

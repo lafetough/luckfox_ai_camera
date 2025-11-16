@@ -26,7 +26,9 @@ set(SOURCES
     "${SOURCE_DIR}/video_encoder.cc"
     "${SOURCE_DIR}/utilities.cc"
     "${SOURCE_DIR}/app.cc"
+    "${SOURCE_DIR}/rknn_interface.cc"
 )
+
 set(HEADERS
     "${INCLUDE_DIR}/rtsp_demo.h"
     "${INCLUDE_DIR}/loadbmp.h"
@@ -38,6 +40,7 @@ set(HEADERS
     "${INCLUDE_DIR}/video_encoder.h"
     "${INCLUDE_DIR}/utilities.h"
     "${INCLUDE_DIR}/app.h"
+    "${INCLUDE_DIR}/rknn_interface.h"
 )
 
 
